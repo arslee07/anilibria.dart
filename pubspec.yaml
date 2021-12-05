@@ -1,0 +1,12 @@
+name: anilibria
+description: A simple and robust way to interact with Anilibria API.
+version: 0.0.1
+
+environment:
+  sdk: '>=2.14.4 <3.0.0'
+
+dev_dependencies:
+  lints: ^1.0.0
+
+dependencies:
+  http: ^0.13.4
