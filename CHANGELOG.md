@@ -1,3 +1,9 @@
+## 0.2.0
+
+-   Implement `Anilibria#getTitle`
+-   Implement `Anilibria#getTitles`
+-   Implement `Anilibria#getChanges`
+
 ## 0.1.1
 
 -   Reverse changelog order
