@@ -19,6 +19,17 @@ abstract class IAnilibria {
     PlaylistType? playlistType,
     int? after,
   });
+
+  Future<Title> getTitle({
+    int? id,
+    String? code,
+    int? torrentId,
+    Iterable<String>? filter,
+    Iterable<String>? remove,
+    Iterable<Include>? include,
+    DescriptionType? descriptionType,
+    PlaylistType? playlistType,
+  });
 }
 
 class Anilibria extends IAnilibria {
@@ -58,5 +69,29 @@ class Anilibria extends IAnilibria {
     final json = jsonDecode(utf8.decode(res.bodyBytes));
 
     return [for (final e in json) Title.fromJson(e)];
+  }
+
+  @override
+  Future<Title> getTitle({
+    int? id,
+    String? code,
+    int? torrentId,
+    Iterable<String>? filter,
+    Iterable<String>? remove,
+    Iterable<Include>? include,
+    DescriptionType? descriptionType,
+    PlaylistType? playlistType,
+  }) async {
+    final res = await _client.get(getUrl(_baseUrl, '/getTitle', {
+      if (id != null) 'id': id.toString(),
+      if (code != null) 'code': code,
+      if (filter != null) 'filter': filter.join(','),
+      if (remove != null) 'remove': remove.join(','),
+      if (include != null) 'include': include.join(','),
+      if (descriptionType != null) 'description_type': descriptionType.value,
+      if (playlistType != null) 'playlist_type': playlistType.value,
+    }));
+    final json = jsonDecode(utf8.decode(res.bodyBytes));
+    return Title.fromJson(json);
   }
 }
