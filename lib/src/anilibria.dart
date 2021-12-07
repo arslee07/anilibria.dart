@@ -40,6 +40,16 @@ abstract class IAnilibria {
     PlaylistType? playlistType,
     int? after,
   });
+
+  Future<Iterable<Title>> getChanges({
+    Iterable<String>? filter,
+    Iterable<String>? remove,
+    Iterable<Include>? include,
+    int? limit,
+    DateTime? since,
+    DescriptionType? descriptionType,
+    int? after,
+  });
 }
 
 class Anilibria extends IAnilibria {
@@ -116,6 +126,30 @@ class Anilibria extends IAnilibria {
       if (since != null) 'since': since.millisecondsSinceEpoch.toString(),
       if (descriptionType != null) 'description_type': descriptionType.value,
       if (playlistType != null) 'playlist_type': playlistType.value,
+      if (after != null) 'after': after.toString(),
+    }));
+    final json = jsonDecode(utf8.decode(res.bodyBytes));
+
+    return [for (final e in json) Title.fromJson(e)];
+  }
+
+  @override
+  Future<Iterable<Title>> getChanges({
+    Iterable<String>? filter,
+    Iterable<String>? remove,
+    Iterable<Include>? include,
+    int? limit,
+    DateTime? since,
+    DescriptionType? descriptionType,
+    int? after,
+  }) async {
+    final res = await _client.get(getUrl(_baseUrl, '/getChanges', {
+      if (filter != null) 'filter': filter.join(','),
+      if (remove != null) 'remove': remove.join(','),
+      if (include != null) 'include': include.join(','),
+      if (limit != null) 'limit': limit.toString(),
+      if (since != null) 'since': since.millisecondsSinceEpoch.toString(),
+      if (descriptionType != null) 'description_type': descriptionType.value,
       if (after != null) 'after': after.toString(),
     }));
     final json = jsonDecode(utf8.decode(res.bodyBytes));
