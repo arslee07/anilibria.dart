@@ -9,17 +9,6 @@ import 'package:anilibria/src/utils/get_url.dart';
 
 /// Generic Anilibria API interface.
 abstract class IAnilibria {
-  Future<Iterable<Title>> getUpdates({
-    Iterable<String>? filter,
-    Iterable<String>? remove,
-    Iterable<Include>? include,
-    int? limit,
-    DateTime? since,
-    DescriptionType? descriptionType,
-    PlaylistType? playlistType,
-    int? after,
-  });
-
   Future<Title> getTitle({
     int? id,
     String? code,
@@ -30,15 +19,17 @@ abstract class IAnilibria {
     DescriptionType? descriptionType,
     PlaylistType? playlistType,
   });
-}
 
-class Anilibria extends IAnilibria {
-  final Uri _baseUrl;
-  final Client _client;
+  Future<Iterable<Title>> getTitles({
+    Iterable<int>? idList,
+    Iterable<String>? codeList,
+    Iterable<String>? filter,
+    Iterable<String>? remove,
+    Iterable<Include>? include,
+    DescriptionType? descriptionType,
+    PlaylistType? playlistType,
+  });
 
-  Anilibria(this._baseUrl) : _client = Client();
-
-  @override
   Future<Iterable<Title>> getUpdates({
     Iterable<String>? filter,
     Iterable<String>? remove,
@@ -48,28 +39,14 @@ class Anilibria extends IAnilibria {
     DescriptionType? descriptionType,
     PlaylistType? playlistType,
     int? after,
-  }) async {
-    final res = await _client.get(
-      getUrl(
-        _baseUrl,
-        '/getUpdates',
-        {
-          if (filter != null) 'filter': filter.join(','),
-          if (remove != null) 'remove': remove.join(','),
-          if (include != null) 'include': include.join(','),
-          if (limit != null) 'limit': limit.toString(),
-          if (since != null) 'since': since.millisecondsSinceEpoch.toString(),
-          if (descriptionType != null)
-            'description_type': descriptionType.value,
-          if (playlistType != null) 'playlist_type': playlistType.value,
-          if (after != null) 'after': after.toString(),
-        },
-      ),
-    );
-    final json = jsonDecode(utf8.decode(res.bodyBytes));
+  });
+}
 
-    return [for (final e in json) Title.fromJson(e)];
-  }
+class Anilibria extends IAnilibria {
+  final Uri _baseUrl;
+  final Client _client;
+
+  Anilibria(this._baseUrl) : _client = Client();
 
   @override
   Future<Title> getTitle({
@@ -92,6 +69,57 @@ class Anilibria extends IAnilibria {
       if (playlistType != null) 'playlist_type': playlistType.value,
     }));
     final json = jsonDecode(utf8.decode(res.bodyBytes));
+
     return Title.fromJson(json);
+  }
+
+  @override
+  Future<Iterable<Title>> getTitles({
+    Iterable<int>? idList,
+    Iterable<String>? codeList,
+    Iterable<String>? filter,
+    Iterable<String>? remove,
+    Iterable<Include>? include,
+    DescriptionType? descriptionType,
+    PlaylistType? playlistType,
+  }) async {
+    final res = await _client.get(getUrl(_baseUrl, '/getTitles', {
+      if (idList != null) 'id_list': idList.join(','),
+      if (codeList != null) 'code_list': codeList.join(','),
+      if (filter != null) 'filter': filter.join(','),
+      if (remove != null) 'remove': remove.join(','),
+      if (include != null) 'include': include.join(','),
+      if (descriptionType != null) 'description_type': descriptionType.value,
+      if (playlistType != null) 'playlist_type': playlistType.value,
+    }));
+    final json = jsonDecode(utf8.decode(res.bodyBytes));
+
+    return [for (final e in json) Title.fromJson(e)];
+  }
+
+  @override
+  Future<Iterable<Title>> getUpdates({
+    Iterable<String>? filter,
+    Iterable<String>? remove,
+    Iterable<Include>? include,
+    int? limit,
+    DateTime? since,
+    DescriptionType? descriptionType,
+    PlaylistType? playlistType,
+    int? after,
+  }) async {
+    final res = await _client.get(getUrl(_baseUrl, '/getUpdates', {
+      if (filter != null) 'filter': filter.join(','),
+      if (remove != null) 'remove': remove.join(','),
+      if (include != null) 'include': include.join(','),
+      if (limit != null) 'limit': limit.toString(),
+      if (since != null) 'since': since.millisecondsSinceEpoch.toString(),
+      if (descriptionType != null) 'description_type': descriptionType.value,
+      if (playlistType != null) 'playlist_type': playlistType.value,
+      if (after != null) 'after': after.toString(),
+    }));
+    final json = jsonDecode(utf8.decode(res.bodyBytes));
+
+    return [for (final e in json) Title.fromJson(e)];
   }
 }
