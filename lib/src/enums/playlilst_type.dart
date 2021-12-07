@@ -1,6 +1,6 @@
 import 'package:anilibria/src/utils/enum.dart';
 
-class PlaylistType extends Enum<String> {
+class PlaylistType extends IEnum<String> {
   static const array = PlaylistType('array');
   static const object = PlaylistType('object');
 

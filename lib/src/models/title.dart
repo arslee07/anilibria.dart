@@ -1,3 +1,7 @@
+import 'package:anilibria/src/enums/codes/season_code.dart';
+import 'package:anilibria/src/enums/codes/title_status_code.dart';
+import 'package:anilibria/src/enums/codes/title_type_code.dart';
+
 class Title {
   final int? id;
   final String? code;
@@ -5,15 +9,15 @@ class Title {
   final String? announce;
   final TitleStatus? status;
   final Poster? poster;
-  final int? updated;
-  final int? lastChange;
-  final TypeModel? type;
+  final DateTime? updated;
+  final DateTime? lastChange;
+  final TitleType? type;
   final List<String>? genres;
-  final TeamModel? team;
-  final SeasonModel? season;
+  final Team? team;
+  final Season? season;
   final String? description;
   final int? inFavorites;
-  final BlockedModel? blocked;
+  final Blocked? blocked;
   final Player? player;
   final Torrents? torrents;
 
@@ -48,20 +52,22 @@ class Title {
             : TitleStatus.fromJson(json['status']),
         poster =
             json['poster'] == null ? null : Poster.fromJson(json['poster']),
-        updated = json['updated'],
-        lastChange = json['last_change'],
-        type = json['type'] == null ? null : TypeModel.fromJson(json['type']),
+        updated = json['updated'] == null
+            ? null
+            : DateTime.fromMillisecondsSinceEpoch(json['updated'] * 1000),
+        lastChange = json['last_change'] == null
+            ? null
+            : DateTime.fromMillisecondsSinceEpoch(json['last_change'] * 1000),
+        type = json['type'] == null ? null : TitleType.fromJson(json['type']),
         genres =
             json['genres'] == null ? null : List<String>.from(json['genres']),
-        team = json['team'] == null ? null : TeamModel.fromJson(json['team']),
-        season = json['season'] == null
-            ? null
-            : SeasonModel.fromJson(json['season']),
+        team = json['team'] == null ? null : Team.fromJson(json['team']),
+        season =
+            json['season'] == null ? null : Season.fromJson(json['season']),
         description = json['description'],
         inFavorites = json['in_favorites'],
-        blocked = json['blocked'] == null
-            ? null
-            : BlockedModel.fromJson(json['blocked']),
+        blocked =
+            json['blocked'] == null ? null : Blocked.fromJson(json['blocked']),
         player =
             json['player'] == null ? null : Player.fromJson(json['player']),
         torrents = json['torrents'] == null
@@ -88,7 +94,7 @@ class TitleNames {
 
 class TitleStatus {
   final String? string;
-  final int? code;
+  final TitleStatusCode? code;
 
   TitleStatus({
     required this.string,
@@ -97,12 +103,12 @@ class TitleStatus {
 
   TitleStatus.fromJson(Map<String, dynamic> json)
       : string = json['string'],
-        code = json['code'];
+        code = json['code'] == null ? null : TitleStatusCode(json['code']);
 }
 
 class Poster {
   final String? url;
-  final int? updatedTimestamp;
+  final DateTime? updatedTimestamp;
   final String? rawBase64File;
 
   Poster({
@@ -113,18 +119,21 @@ class Poster {
 
   Poster.fromJson(Map<String, dynamic> json)
       : url = json['url'],
-        updatedTimestamp = json['updated_timestamp'],
+        updatedTimestamp = json['updated_timestamp'] == null
+            ? null
+            : DateTime.fromMillisecondsSinceEpoch(
+                json['updated_timestamp'] * 1000),
         rawBase64File = json['raw_base64_file'];
 }
 
-class TypeModel {
+class TitleType {
   final String? fullString;
-  final int? code;
+  final TitleTypeCode? code;
   final String? string;
   final int? series;
   final String? length;
 
-  TypeModel({
+  TitleType({
     required this.fullString,
     required this.code,
     required this.string,
@@ -132,22 +141,22 @@ class TypeModel {
     required this.length,
   });
 
-  TypeModel.fromJson(Map<String, dynamic> json)
+  TitleType.fromJson(Map<String, dynamic> json)
       : fullString = json['full_string'],
-        code = json['code'],
+        code = json['code'] == null ? null : TitleTypeCode(json['code']),
         string = json['string'],
         series = json['series'],
         length = json['length'];
 }
 
-class TeamModel {
+class Team {
   final List<String>? voice;
   final List<String>? translator;
   final List<String>? editing;
   final List<String>? decor;
   final List<String>? timing;
 
-  TeamModel({
+  Team({
     required this.voice,
     required this.translator,
     required this.editing,
@@ -155,7 +164,7 @@ class TeamModel {
     required this.timing,
   });
 
-  TeamModel.fromJson(Map<String, dynamic> json)
+  Team.fromJson(Map<String, dynamic> json)
       : voice = List<String>.from(json['voice']),
         translator = List<String>.from(json['translator']),
         editing = List<String>.from(json['editing']),
@@ -163,36 +172,36 @@ class TeamModel {
         timing = List<String>.from(json['timing']);
 }
 
-class SeasonModel {
+class Season {
   final String? string;
-  final int? code;
+  final SeasonCode? code;
   final int? year;
   final int? weekDay;
 
-  SeasonModel({
+  Season({
     required this.string,
     required this.code,
     required this.year,
     required this.weekDay,
   });
 
-  SeasonModel.fromJson(Map<String, dynamic> json)
+  Season.fromJson(Map<String, dynamic> json)
       : string = json['string'],
-        code = json['code'],
+        code = json['code'] == null ? null : SeasonCode(json['code']),
         year = json['year'],
         weekDay = json['week_day'];
 }
 
-class BlockedModel {
+class Blocked {
   final bool? blocked;
   final bool? wakanim;
 
-  BlockedModel({
+  Blocked({
     required this.blocked,
     required this.wakanim,
   });
 
-  BlockedModel.fromJson(Map<String, dynamic> json)
+  Blocked.fromJson(Map<String, dynamic> json)
       : blocked = json['blocked'],
         wakanim = json['bakanim'];
 }
@@ -299,7 +308,7 @@ class Torrent {
   final int? downloads;
   final int? totalSize;
   final String? url;
-  final int? uploadedTimestamp;
+  final DateTime? uploadedTimestamp;
   final String? metadata;
   final String? rawBase64File;
 
@@ -329,7 +338,10 @@ class Torrent {
         downloads = json['downloads'],
         totalSize = json['total_size'],
         url = json['url'],
-        uploadedTimestamp = json['uploaded_timestamp'],
+        uploadedTimestamp = json['uploaded_timestamp'] == null
+            ? null
+            : DateTime.fromMillisecondsSinceEpoch(
+                json['uploaded_timestamp'] * 1000),
         metadata = json['metadata'],
         rawBase64File = json['raw_base64_file'];
 }

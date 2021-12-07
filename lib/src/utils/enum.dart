@@ -1,12 +1,12 @@
 /// Abstract interface for enums in library
-abstract class Enum<T> {
+abstract class IEnum<T> {
   final T _value;
 
   /// Returns value of enum
   T get value => _value;
 
   /// Creates enum with given value
-  const Enum(this._value);
+  const IEnum(this._value);
 
   @override
   String toString() => _value.toString();
@@ -16,7 +16,7 @@ abstract class Enum<T> {
 
   @override
   bool operator ==(dynamic other) {
-    if (other is Enum<T>) {
+    if (other is IEnum<T>) {
       return other._value == _value;
     }
 

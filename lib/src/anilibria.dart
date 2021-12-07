@@ -1,12 +1,11 @@
 import 'dart:convert';
+import 'package:http/http.dart';
 
+import 'package:anilibria/src/enums/include.dart';
 import 'package:anilibria/src/enums/description_type.dart';
 import 'package:anilibria/src/enums/playlilst_type.dart';
 import 'package:anilibria/src/models/title.dart';
 import 'package:anilibria/src/utils/get_url.dart';
-import 'package:http/http.dart';
-
-import 'enums/include.dart';
 
 /// Generic Anilibria API interface.
 abstract class IAnilibria {

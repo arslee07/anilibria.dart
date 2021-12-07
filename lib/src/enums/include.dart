@@ -1,6 +1,6 @@
 import 'package:anilibria/src/utils/enum.dart';
 
-class Include extends Enum<String> {
+class Include extends IEnum<String> {
   static const rawPoster = Include('raw_poster');
   static const rawTorrent = Include('raw_torrent');
   static const torrentMeta = Include('torrent_meta');
