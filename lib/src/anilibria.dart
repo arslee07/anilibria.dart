@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:anilibria/src/enums/codes/season_code.dart';
 import 'package:http/http.dart';
 
 import 'package:anilibria/src/enums/include.dart';
@@ -48,6 +49,25 @@ abstract class IAnilibria {
     int? limit,
     DateTime? since,
     DescriptionType? descriptionType,
+    int? after,
+  });
+
+  Future<Iterable<Title>> searchTitles({
+    String? search,
+    Iterable<String>? years,
+    Iterable<SeasonCode>? seasonCode,
+    Iterable<String>? genres,
+    Iterable<String>? voice,
+    Iterable<String>? translator,
+    Iterable<String>? editing,
+    Iterable<String>? decor,
+    Iterable<String>? timing,
+    Iterable<String>? filter,
+    Iterable<String>? remove,
+    Iterable<Include>? include,
+    DescriptionType? descriptionType,
+    PlaylistType? playlistType,
+    int? limit,
     int? after,
   });
 }
@@ -150,6 +170,48 @@ class Anilibria extends IAnilibria {
       if (limit != null) 'limit': limit.toString(),
       if (since != null) 'since': since.millisecondsSinceEpoch.toString(),
       if (descriptionType != null) 'description_type': descriptionType.value,
+      if (after != null) 'after': after.toString(),
+    }));
+    final json = jsonDecode(utf8.decode(res.bodyBytes));
+
+    return [for (final e in json) Title.fromJson(e)];
+  }
+
+  @override
+  Future<Iterable<Title>> searchTitles({
+    String? search,
+    Iterable<String>? years,
+    Iterable<SeasonCode>? seasonCode,
+    Iterable<String>? genres,
+    Iterable<String>? voice,
+    Iterable<String>? translator,
+    Iterable<String>? editing,
+    Iterable<String>? decor,
+    Iterable<String>? timing,
+    Iterable<String>? filter,
+    Iterable<String>? remove,
+    Iterable<Include>? include,
+    DescriptionType? descriptionType,
+    PlaylistType? playlistType,
+    int? limit,
+    int? after,
+  }) async {
+    final res = await _client.get(getUrl(_baseUrl, '/searchTitles', {
+      if (search != null) 'search': search,
+      if (seasonCode != null)
+        'season_code': seasonCode.map((e) => e.value.toString()).join(', '),
+      if (genres != null) 'genres': genres.join(', '),
+      if (voice != null) 'voice': voice.join(', '),
+      if (translator != null) 'translator': translator.join(', '),
+      if (editing != null) 'editing': editing.join(', '),
+      if (decor != null) 'decor': decor.join(', '),
+      if (timing != null) 'timing': timing.join(', '),
+      if (filter != null) 'filter': filter.join(','),
+      if (remove != null) 'remove': remove.join(','),
+      if (include != null) 'include': include.join(','),
+      if (descriptionType != null) 'description_type': descriptionType.value,
+      if (playlistType != null) 'playlist_type': playlistType.value,
+      if (limit != null) 'limit': limit.toString(),
       if (after != null) 'after': after.toString(),
     }));
     final json = jsonDecode(utf8.decode(res.bodyBytes));
