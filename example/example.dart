@@ -7,15 +7,11 @@ void main() async {
   final title = await anilibria.getTitle(id: 824);
   print(title.names?.en);
 
-  // Fetch multiple titles
-  final titles = await anilibria.getTitles(idList: [3542, 9006]);
-  for (final title in titles) {
-    print(title.names?.en);
-  }
-
   // Fetch updated titles
   final updates = await anilibria.getUpdates(limit: 10);
-  for (final update in updates) {
-    print(update.names?.en);
-  }
+  print(updates.map((e) => e.names?.en));
+
+  // Search some titles
+  final search = await anilibria.searchTitles(search: 'Maid Dragon');
+  print(search.map((e) => e.names?.en));
 }
