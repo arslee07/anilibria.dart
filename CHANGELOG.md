@@ -1,3 +1,7 @@
+## 0.3.0
+
+-   Implement `Anilibria#searchTitles`
+
 ## 0.2.0
 
 -   Implement `Anilibria#getTitle`
