@@ -309,7 +309,7 @@ class Torrent {
   final int? totalSize;
   final String? url;
   final DateTime? uploadedTimestamp;
-  final String? metadata;
+  final TorrentMetadata? metadata;
   final String? rawBase64File;
 
   Torrent({
@@ -342,7 +342,9 @@ class Torrent {
             ? null
             : DateTime.fromMillisecondsSinceEpoch(
                 json['uploaded_timestamp'] * 1000),
-        metadata = json['metadata'],
+        metadata = json['metadata'] == null
+            ? null
+            : TorrentMetadata.fromJson(json['metadata']),
         rawBase64File = json['raw_base64_file'];
 }
 
@@ -367,4 +369,49 @@ class TorrentQuality {
         resolution = json['resolution'],
         encoder = json['encoder'],
         lqAudio = json['lq_audio'];
+}
+
+class TorrentMetadata {
+  final String? hash;
+  final String? name;
+  final List<String>? announce;
+  final DateTime? createdTimestamp;
+  final List<TorrentFile>? filesList;
+
+  TorrentMetadata({
+    required this.hash,
+    required this.name,
+    required this.announce,
+    required this.createdTimestamp,
+    required this.filesList,
+  });
+
+  TorrentMetadata.fromJson(Map<String, dynamic> json)
+      : hash = json['hash'],
+        name = json['name'],
+        announce = json['files_list'],
+        createdTimestamp = json['created_timestamp'] == null
+            ? null
+            : DateTime.fromMillisecondsSinceEpoch(
+                json['created_timestamp'] * 1000),
+        filesList = json['files_list'] == null
+            ? null
+            : [for (final e in json['files_list']) TorrentFile.fromJson(e)];
+}
+
+class TorrentFile {
+  final String file;
+  final int size;
+  final int offset;
+
+  TorrentFile({
+    required this.file,
+    required this.size,
+    required this.offset,
+  });
+
+  TorrentFile.fromJson(Map<String, dynamic> json)
+      : file = json['file'],
+        size = json['size'],
+        offset = json['file'];
 }
