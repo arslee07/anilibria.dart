@@ -1,5 +1,10 @@
 ## 0.3.0
 
+-   Implement `Anilibria#getRandomTitle`
+-   Implement `TorrentMetadata` (also fixes deserialization exception)
+
+## 0.3.0
+
 -   Implement `Anilibria#searchTitles`
 
 ## 0.2.0
