@@ -14,4 +14,8 @@ void main() async {
   // Search some titles
   final search = await anilibria.searchTitles(search: 'Maid Dragon');
   print(search.map((e) => e.names?.en));
+
+  // Fetch random title
+  final random = await anilibria.getRandomTitle();
+  print(random.names?.en);
 }
