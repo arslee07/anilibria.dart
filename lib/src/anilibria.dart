@@ -70,6 +70,14 @@ abstract class IAnilibria {
     int? limit,
     int? after,
   });
+
+  Future<Title> getRandomTitle({
+    Iterable<String>? filter,
+    Iterable<String>? remove,
+    Iterable<Include>? include,
+    DescriptionType? descriptionType,
+    PlaylistType? playlistType,
+  });
 }
 
 class Anilibria extends IAnilibria {
@@ -217,5 +225,25 @@ class Anilibria extends IAnilibria {
     final json = jsonDecode(utf8.decode(res.bodyBytes));
 
     return [for (final e in json) Title.fromJson(e)];
+  }
+
+  @override
+  Future<Title> getRandomTitle({
+    Iterable<String>? filter,
+    Iterable<String>? remove,
+    Iterable<Include>? include,
+    DescriptionType? descriptionType,
+    PlaylistType? playlistType,
+  }) async {
+    final res = await _client.get(getUrl(_baseUrl, '/getRandomTitle', {
+      if (filter != null) 'filter': filter.join(','),
+      if (remove != null) 'remove': remove.join(','),
+      if (include != null) 'include': include.join(','),
+      if (descriptionType != null) 'description_type': descriptionType.value,
+      if (playlistType != null) 'playlist_type': playlistType.value,
+    }));
+    final json = jsonDecode(utf8.decode(res.bodyBytes));
+
+    return Title.fromJson(json);
   }
 }
