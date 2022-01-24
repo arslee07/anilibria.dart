@@ -1,3 +1,7 @@
+## 0.5.1
+
+-   Fix posters declaration in `Title`
+
 ## 0.5.0
 
 -   Implement new `Posters` object
