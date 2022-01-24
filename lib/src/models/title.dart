@@ -106,23 +106,32 @@ class TitleStatus {
         code = json['code'] == null ? null : TitleStatusCode(json['code']);
 }
 
+class Posters {
+  final Poster? small;
+  final Poster? medium;
+  final Poster? original;
+
+  Posters({this.small, this.medium, this.original});
+
+  Posters.fromJson(Map<String, dynamic> json)
+      : small = json['small'] == null ? null : Poster.fromJson(json['small']),
+        medium =
+            json['medium'] == null ? null : Poster.fromJson(json['medium']),
+        original =
+            json['original'] == null ? null : Poster.fromJson(json['original']);
+}
+
 class Poster {
   final String? url;
-  final DateTime? updatedTimestamp;
   final String? rawBase64File;
 
   Poster({
     required this.url,
-    required this.updatedTimestamp,
     required this.rawBase64File,
   });
 
   Poster.fromJson(Map<String, dynamic> json)
       : url = json['url'],
-        updatedTimestamp = json['updated_timestamp'] == null
-            ? null
-            : DateTime.fromMillisecondsSinceEpoch(
-                json['updated_timestamp'] * 1000),
         rawBase64File = json['raw_base64_file'];
 }
 
