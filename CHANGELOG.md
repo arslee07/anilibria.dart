@@ -1,4 +1,8 @@
-## 0.3.0
+## 0.5.0
+
+-   Implement new `Posters` object
+
+## 0.4.0
 
 -   Implement `Anilibria#getRandomTitle`
 -   Implement `TorrentMetadata` (also fixes deserialization exception)
