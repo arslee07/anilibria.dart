@@ -8,7 +8,7 @@ class Title {
   final TitleNames? names;
   final String? announce;
   final TitleStatus? status;
-  final Poster? poster;
+  final Posters? posters;
   final DateTime? updated;
   final DateTime? lastChange;
   final TitleType? type;
@@ -27,7 +27,7 @@ class Title {
     required this.names,
     required this.announce,
     required this.status,
-    required this.poster,
+    required this.posters,
     required this.updated,
     required this.lastChange,
     required this.type,
@@ -50,8 +50,8 @@ class Title {
         status = json['status'] == null
             ? null
             : TitleStatus.fromJson(json['status']),
-        poster =
-            json['poster'] == null ? null : Poster.fromJson(json['poster']),
+        posters =
+            json['posters'] == null ? null : Posters.fromJson(json['posters']),
         updated = json['updated'] == null
             ? null
             : DateTime.fromMillisecondsSinceEpoch(json['updated'] * 1000),
