@@ -140,7 +140,7 @@ class TitleType {
   final TitleTypeCode? code;
   final String? string;
   final int? series;
-  final String? length;
+  final int? length;
 
   TitleType({
     required this.fullString,
