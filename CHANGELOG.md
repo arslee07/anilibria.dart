@@ -1,3 +1,7 @@
+## 0.5.2
+
+-   Fix deserialization bug
+
 ## 0.5.1
 
 -   Fix posters declaration in `Title`
