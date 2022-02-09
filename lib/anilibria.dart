@@ -5,3 +5,4 @@ export 'src/enums/playlilst_type.dart';
 export 'src/enums/include.dart';
 
 export 'src/models/title.dart';
+export 'src/models/youtube.dart';
