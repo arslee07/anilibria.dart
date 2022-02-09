@@ -10,7 +10,9 @@ import 'package:anilibria/src/models/title.dart';
 import 'package:anilibria/src/utils/get_url.dart';
 
 /// Generic Anilibria API interface.
-abstract class IAnilibria {
+abstract class Anilibria {
+  factory Anilibria(Uri baseUrl) => _Anilibria(baseUrl);
+
   Future<Title> getTitle({
     int? id,
     String? code,
@@ -89,11 +91,11 @@ abstract class IAnilibria {
   });
 }
 
-class Anilibria extends IAnilibria {
+class _Anilibria implements Anilibria {
   final Uri _baseUrl;
   final Client _client;
 
-  Anilibria(this._baseUrl) : _client = Client();
+  _Anilibria(this._baseUrl) : _client = Client();
 
   @override
   Future<Title> getTitle({
