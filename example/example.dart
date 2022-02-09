@@ -3,10 +3,6 @@ import 'package:anilibria/anilibria.dart';
 void main() async {
   final anilibria = Anilibria(Uri.parse('https://api.anilibria.tv/v2'));
 
-  // Fetch one title
-  final title = await anilibria.getTitle(id: 824);
-  print(title.names?.en);
-
   // Fetch updated titles
   final updates = await anilibria.getUpdates(limit: 10);
   print(updates.map((e) => e.names?.en));
@@ -18,4 +14,8 @@ void main() async {
   // Fetch random title
   final random = await anilibria.getRandomTitle();
   print(random.names?.en);
+
+  // Fetch YouTube videos
+  final videos = await anilibria.getYoutube();
+  print(videos.map((e) => e.title));
 }
