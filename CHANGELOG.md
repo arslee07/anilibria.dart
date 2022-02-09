@@ -1,3 +1,8 @@
+## 0.6.0
+
+-   Implement Youtube model
+-   Implement `Anilibria#getYoutube`
+
 ## 0.5.2
 
 -   Fix deserialization bug
