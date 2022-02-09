@@ -1,3 +1,7 @@
+## 0.6.2
+
+-   Add `Youtube` class to export
+
 ## 0.6.1
 
 -   Hide `Anilibria` interface implementation
