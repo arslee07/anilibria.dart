@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:anilibria/src/enums/codes/season_code.dart';
+import 'package:anilibria/src/models/youtube.dart';
 import 'package:http/http.dart';
 
 import 'package:anilibria/src/enums/include.dart';
@@ -77,6 +78,14 @@ abstract class IAnilibria {
     Iterable<Include>? include,
     DescriptionType? descriptionType,
     PlaylistType? playlistType,
+  });
+
+  Future<Iterable<Youtube>> getYoutube({
+    Iterable<String>? filter,
+    Iterable<String>? remove,
+    int? limit,
+    DateTime? since,
+    int? after,
   });
 }
 
@@ -245,5 +254,25 @@ class Anilibria extends IAnilibria {
     final json = jsonDecode(utf8.decode(res.bodyBytes));
 
     return Title.fromJson(json);
+  }
+
+  @override
+  Future<Iterable<Youtube>> getYoutube({
+    Iterable<String>? filter,
+    Iterable<String>? remove,
+    int? limit,
+    DateTime? since,
+    int? after,
+  }) async {
+    final res = await _client.get(getUrl(_baseUrl, '/getYoutube', {
+      if (filter != null) 'filter': filter.join(','),
+      if (remove != null) 'remove': remove.join(','),
+      if (limit != null) 'limit': limit.toString(),
+      if (since != null) 'since': since.millisecondsSinceEpoch.toString(),
+      if (after != null) 'after': after.toString(),
+    }));
+    final json = jsonDecode(utf8.decode(res.bodyBytes));
+
+    return [for (final e in json) Youtube.fromJson(e)];
   }
 }
