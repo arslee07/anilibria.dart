@@ -1,3 +1,9 @@
+## 0.6.1
+
+-   Hide `Anilibria` interface implementation
+-   Update example
+-   Update README
+
 ## 0.6.0
 
 -   Implement Youtube model
