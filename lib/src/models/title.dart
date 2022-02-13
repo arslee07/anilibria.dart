@@ -360,7 +360,7 @@ class Torrent {
 class TorrentQuality {
   final String? string;
   final String? type;
-  final int? resolution;
+  final String? resolution;
   final String? encoder;
   final bool? lqAudio;
 
