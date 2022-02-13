@@ -1,3 +1,7 @@
+## 0.6.3
+
+-   Fix `TorrentQuality` deserialization
+
 ## 0.6.2
 
 -   Add `Youtube` class to export
