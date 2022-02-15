@@ -1,3 +1,8 @@
+## 0.7.0
+
+-   Implement `Schedule` model
+-   Implement `Anilibria#getSchedule`
+
 ## 0.6.3
 
 -   Fix `TorrentQuality` deserialization
