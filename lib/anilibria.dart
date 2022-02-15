@@ -6,3 +6,4 @@ export 'src/enums/include.dart';
 
 export 'src/models/title.dart';
 export 'src/models/youtube.dart';
+export 'src/models/schedule.dart';

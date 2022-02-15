@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:anilibria/anilibria.dart';
 import 'package:anilibria/src/enums/codes/season_code.dart';
 import 'package:anilibria/src/models/youtube.dart';
 import 'package:http/http.dart';
@@ -88,6 +89,15 @@ abstract class Anilibria {
     int? limit,
     DateTime? since,
     int? after,
+  });
+
+  Future<Iterable<Schedule>> getSchedule({
+    Iterable<String>? days,
+    Iterable<String>? filter,
+    Iterable<String>? remove,
+    Iterable<Include>? include,
+    DescriptionType? descriptionType,
+    PlaylistType? playlistType,
   });
 }
 
@@ -276,5 +286,27 @@ class _Anilibria implements Anilibria {
     final json = jsonDecode(utf8.decode(res.bodyBytes));
 
     return [for (final e in json) Youtube.fromJson(e)];
+  }
+
+  @override
+  Future<Iterable<Schedule>> getSchedule({
+    Iterable<String>? days,
+    Iterable<String>? filter,
+    Iterable<String>? remove,
+    Iterable<Include>? include,
+    DescriptionType? descriptionType,
+    PlaylistType? playlistType,
+  }) async {
+    final res = await _client.get(getUrl(_baseUrl, '/getSchedule', {
+      if (days != null) 'days': days.join(','),
+      if (filter != null) 'filter': filter.join(','),
+      if (remove != null) 'remove': remove.join(','),
+      if (include != null) 'include': include.join(','),
+      if (descriptionType != null) 'description_type': descriptionType.value,
+      if (playlistType != null) 'playlist_type': playlistType.value,
+    }));
+    final json = jsonDecode(utf8.decode(res.bodyBytes));
+
+    return [for (final e in json) Schedule.fromJson(e)];
   }
 }
