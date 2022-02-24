@@ -1,3 +1,7 @@
+## 0.8.0
+-   Implement `Skips`
+-   Implement serie preview
+
 ## 0.7.0
 
 -   Implement `Schedule` model
