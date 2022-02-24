@@ -260,18 +260,46 @@ class Series {
 class Serie {
   final int? serie;
   final int? createdTimestamp;
+  final String? preview;
+  final Skips? skips;
   final Hls? hls;
 
   Serie({
     required this.serie,
     required this.createdTimestamp,
     required this.hls,
+    required this.skips,
+    required this.preview,
   });
 
   Serie.fromJson(Map<String, dynamic> json)
       : serie = json['serie'],
         createdTimestamp = json['created_timestamp'],
-        hls = json['hls'] == null ? null : Hls.fromJson(json['hls']);
+        hls = json['hls'] == null ? null : Hls.fromJson(json['hls']),
+        preview = json['preview'],
+        skips = json['skips'] == null ? null : Skips.fromJson(json['skips']);
+}
+
+class Skips {
+  final Skip? opening;
+  final Skip? ending;
+
+  Skips.fromJson(Map<String, dynamic> json)
+      : opening = (json['opening'] ?? []).isEmpty
+            ? null
+            : Skip.fromTuple(json['opening']),
+        ending = (json['ending'] ?? []).isEmpty
+            ? null
+            : Skip.fromTuple(json['ending']);
+}
+
+class Skip {
+  int start;
+  int stop;
+
+  Skip.fromTuple(List<dynamic> tuple)
+      : start = int.parse(tuple[0]),
+        stop = int.parse(tuple[1]);
 }
 
 class Hls {
