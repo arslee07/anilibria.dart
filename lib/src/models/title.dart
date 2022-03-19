@@ -287,15 +287,23 @@ class Skips {
   Skips.fromJson(Map<String, dynamic> json)
       : opening = (json['opening'] ?? []).isEmpty
             ? null
-            : Skip.fromTuple(json['opening']),
-        ending = (json['ending'] ?? []).isEmpty
-            ? null
-            : Skip.fromTuple(json['ending']);
+            : Skip.define(json['opening']),
+        ending =
+            (json['ending'] ?? []).isEmpty ? null : Skip.define(json['ending']);
 }
 
 class Skip {
-  int start;
+  int? start;
   int stop;
+
+  factory Skip.define(dynamic raw) =>
+      raw is List<dynamic> ? Skip.fromTuple(raw) : Skip.fromMap(raw);
+
+  Skip.fromMap(Map<String, dynamic> map)
+      : start = map.length == 1 ? null : int.parse(map.values.elementAt(0)),
+        stop = map.length == 1
+            ? int.parse(map.values.elementAt(0))
+            : int.parse(map.values.elementAt(1));
 
   Skip.fromTuple(List<dynamic> tuple)
       : start = int.parse(tuple[0]),

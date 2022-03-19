@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:anilibria/anilibria.dart';
 import 'package:anilibria/src/enums/codes/season_code.dart';
+import 'package:anilibria/src/models/schedule.dart';
 import 'package:anilibria/src/models/youtube.dart';
 import 'package:http/http.dart';
 
