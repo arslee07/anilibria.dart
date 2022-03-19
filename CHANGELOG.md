@@ -1,3 +1,6 @@
+## 0.8.1
+-   Fix `Skip` deserialization issue
+
 ## 0.8.0
 -   Implement `Skips`
 -   Implement serie preview

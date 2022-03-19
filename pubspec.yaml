@@ -1,6 +1,6 @@
 name: anilibria
 description: A simple and robust way to interact with Anilibria API. Supports all platforms.
-version: 0.8.0
+version: 0.8.1
 repository: https://github.com/arslee07/anilibria.dart
 
 environment:
