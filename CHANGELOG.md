@@ -1,3 +1,6 @@
+## 0.8.3
+-   Fix `TitleStatusCode` values
+
 ## 0.8.2
 -   Export enums based on status code
 
