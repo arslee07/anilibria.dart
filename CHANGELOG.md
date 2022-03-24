@@ -1,3 +1,6 @@
+## 0.8.2
+-   Export enums based on status code
+
 ## 0.8.1
 -   Fix `Skip` deserialization issue
 
