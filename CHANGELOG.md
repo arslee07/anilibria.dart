@@ -1,3 +1,6 @@
+## 0.8.4
+-   Fix `Skip` deserialization error
+
 ## 0.8.3
 -   Fix `TitleStatusCode` values
 
