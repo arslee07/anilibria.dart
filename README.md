@@ -1,3 +1,6 @@
+> [!WARNING]
+> Moved to https://codeberg.org/arslee07/anilibria.dart
+
 # anilibria.dart
 
 A simple and robust way to interact with Anilibria API.
